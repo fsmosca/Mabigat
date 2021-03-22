@@ -1,0 +1,2 @@
+# Mabigat
+NNUE parameter optimizer
