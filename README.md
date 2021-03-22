@@ -1,5 +1,5 @@
 # Mabigat
-NNUE parameter optimizer
+Parameter optimizer in the generation of NNUE net using Optuna framework.
 
 ## Setup
 * Install python version 3.8 or more
