@@ -22,7 +22,7 @@ Similar to section A but with higher depth and lower number of positions.
 ### C. Learning
 Once the training and validation positions are generated learning can then proceed. Learning has also a lot of parameters to optimize, this includes the learning rate, max_grad, validation count and [many others](https://github.com/nodchip/Stockfish/blob/master/docs/learn.md).
 
-After learning we will get a NNUE net which is then used by the Stockfish engine.
+After learning we will get a NNUE net which is then can be used by Stockfish and other engines that supports NNUE net.
 
 ### D. Optuna framework optimizer
 Basically we generate multiple NNUE net one at a time varying the parameters in the training, validation and learning processes. Each NNUE net is then tested in an engine vs engine match. For example we want to vary the following training/validation parameters:  
