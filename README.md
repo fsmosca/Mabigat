@@ -7,7 +7,7 @@ Parameter optimizer in the generation of NNUE net using Optuna framework.
   * pip install optuna
 * Intall pandas  
   * pip install pandas
-* Download this repo
+* Download this repo (will upload the whole pack this weekend)
 
 This is tested to work in windows 10.
 
