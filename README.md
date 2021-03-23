@@ -111,3 +111,4 @@ param to try: {'random_move_count': 17, 'random_multi_pv': 5, 'random_multi_pv_d
 * [Nodchip](https://github.com/nodchip/Stockfish)
 * [Stockfish](https://github.com/official-stockfish/Stockfish)
 * [Optuna](https://github.com/optuna/optuna)
+* [Cutechess] (https://github.com/cutechess/cutechess)
