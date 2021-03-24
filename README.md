@@ -348,7 +348,13 @@ random_multi_pv_diff is showing some promise in the range 100 to 200
 
 *** 
 
-favored random_multi_pv values
+favored random_multi_pv values, a parameter during [training/validation positions generation](https://github.com/nodchip/Stockfish/blob/master/docs/gensfen.md)
+
+```
+random_multi_pv - the number of PVs used for determining the random move.
+  If not specified then a truly random move will be chosen. If specified then 
+  a multiPV search will be performed the random move will be one of the moves chosen by the search.
+```
 
 ![](https://i.imgur.com/mhaWDXJ.png)
 
