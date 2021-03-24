@@ -109,7 +109,7 @@ param to try: {'random_move_count': 17, 'random_multi_pv': 5, 'random_multi_pv_d
 
 ## Optimization test
 
-### A. Trial 0 as fix opponent
+### A. Trial 0 as fix opponent of optimizer
 If the net from trial 0 is not good, it would be difficult to know which parameters are really optimized.
 
 ##### Parameters to be optimized
@@ -190,10 +190,180 @@ param to try: {'random_move_count': 5, 'random_multi_pv': 5, 'random_multi_pv_di
 
 ```
 
-Two solutions, first use a good pre-trained nn as fix opponent of optimizer param values or second use the best param so far found as the opponent of the optimizer param values.
+Two solutions, first use a good pre-trained nn as fix opponent of optimizer param values or second use the best param found so far as the opponent of the optimizer param values.
 
-### B. Best trial found so far as fix opponent
+### B. Best trial found so far as opponent of optimizer
+Whenever a new net defeats the old best net, this new net will become the best net and be the opponent of new net from the parameters suggested by the optimizer.
 
+##### Parameters to be optimized
+This the same parameters used in section A above.
+
+```python
+random_move_count = trial.suggest_int('random_move_count', 5, 20, 1)
+random_multi_pv = trial.suggest_int('random_multi_pv', 4, 8, 1)
+random_multi_pv_diff = trial.suggest_int('random_multi_pv_diff', 100, 400, 25)
+max_grad = trial.suggest_categorical('max_grad', [0.1, 0.2, 0.3, 0.5, 0.6])
+lambda1 = trial.suggest_categorical('lambda1', [0.0, 0.25, 0.5, 0.75, 1.0])
+random_move_minply = trial.suggest_int('random_move_minply', 1, 10, 1)
+write_minply = trial.suggest_int('write_minply', 6, 26, 1)
+skip_dupes_in_training = trial.suggest_categorical('skip_dupes_in_training', [0, 1])
+fen_skip_train = trial.suggest_categorical('fen_skip_train', [0, 1])
+fen_skip_val = trial.suggest_categorical('fen_skip_val', [0, 1])
+```
+
+```
+A new study created in RDB with name: nnue_study_4
+Mabigat NNUE parameter optimizer
+
+engine   : ./engine/nodchip_stockfish_2021-03-23.exe
+threads  : 6
+hash     : 1024
+
+study name: nnue_study_4
+number of trials: 20
+optimizer: Optuna with TPE sampler
+
+number of training positions: 2000000
+number of validation positions: 2000
+training depth: 1
+validation depth: 4
+book: ./opening/noob_3moves.epd
+
+eval_save_interval: 500000
+loss_output_interval: 50000
+
+starting trial: 0
+param to try: {'random_move_count': 5, 'random_multi_pv': 4, 'random_multi_pv_diff': 150, 'max_grad': 0.2, 'lambda1': 0.5, 'random_move_minply': 6, 'write_minply': 6, 'skip_dupes_in_training': 1, 'fen_skip_train': 0, 'fen_skip_val': 1}
+ number  value  params_fen_skip_train  params_fen_skip_val  params_lambda1  params_max_grad  params_random_move_count  params_random_move_minply  params_random_multi_pv  params_random_multi_pv_diff  params_skip_dupes_in_training  params_write_minply    state
+      0    0.5                      0                    1             0.5              0.2                         5                          6                       4                          150                              1                    6 COMPLETE
+
+starting trial: 1
+param to try: {'random_move_count': 11, 'random_multi_pv': 4, 'random_multi_pv_diff': 275, 'max_grad': 0.5, 'lambda1': 1.0, 'random_move_minply': 3, 'write_minply': 9, 'skip_dupes_in_training': 1, 'fen_skip_train': 1, 'fen_skip_val': 0}
+Execute engine vs engine match between 1_nn.bin and 0_nn.bin
+Match done! actual result: 0.69, point of view: name=1_nn
+use_best_param: True, adjusted result: 0.69
+ number  value  params_fen_skip_train  params_fen_skip_val  params_lambda1  params_max_grad  params_random_move_count  params_random_move_minply  params_random_multi_pv  params_random_multi_pv_diff  params_skip_dupes_in_training  params_write_minply    state
+      0   0.50                      0                    1             0.5              0.2                         5                          6                       4                          150                              1                    6 COMPLETE
+      1   0.69                      1                    0             1.0              0.5                        11                          3                       4                          275                              1                    9 COMPLETE
+
+starting trial: 2
+param to try: {'random_move_count': 16, 'random_multi_pv': 4, 'random_multi_pv_diff': 150, 'max_grad': 0.2, 'lambda1': 0.75, 'random_move_minply': 1, 'write_minply': 13, 'skip_dupes_in_training': 1, 'fen_skip_train': 0, 'fen_skip_val': 1}
+Execute engine vs engine match between 2_nn.bin and 1_nn.bin
+Match done! actual result: 0.833, point of view: name=2_nn
+use_best_param: True, adjusted result: 1.023
+ number  value  params_fen_skip_train  params_fen_skip_val  params_lambda1  params_max_grad  params_random_move_count  params_random_move_minply  params_random_multi_pv  params_random_multi_pv_diff  params_skip_dupes_in_training  params_write_minply    state
+      0  0.500                      0                    1            0.50              0.2                         5                          6                       4                          150                              1                    6 COMPLETE
+      1  0.690                      1                    0            1.00              0.5                        11                          3                       4                          275                              1                    9 COMPLETE
+      2  1.023                      0                    1            0.75              0.2                        16                          1                       4                          150                              1                   13 COMPLETE
+
+```
+
+After 3 trials net 1 defeats net 0 and net 3 defeates net 2.
+
+Result after trial 36.
+
+```
+starting trial: 36
+param to try: {'random_move_count': 11, 'random_multi_pv': 4, 'random_multi_pv_diff': 175, 'max_grad': 0.5, 'lambda1': 1.0, 'random_move_minply': 5, 'write_minply': 15, 'skip_dupes_in_training': 1, 'fen_skip_train': 1, 'fen_skip_val': 1}
+Execute engine vs engine match between 36_nn.bin and 34_nn.bin
+Match done! actual result: 0.555, point of view: name=36_nn
+use_best_param: True, adjusted result: 1.5780000000000003
+ number  value  params_fen_skip_train  params_fen_skip_val  params_lambda1  params_max_grad  params_random_move_count  params_random_move_minply  params_random_multi_pv  params_random_multi_pv_diff  params_skip_dupes_in_training  params_write_minply    state
+      0  0.500                      0                    1            0.50              0.2                         5                          6                       4                          150                              1                    6 COMPLETE
+      1  0.690                      1                    0            1.00              0.5                        11                          3                       4                          275                              1                    9 COMPLETE
+      2  1.023                      0                    1            0.75              0.2                        16                          1                       4                          150                              1                   13 COMPLETE
+      3  0.040                      1                    1            0.25              0.3                        11                          9                       4                          100                              0                   21 COMPLETE
+      4  0.070                      0                    0            0.00              0.6                         8                          3                       7                          225                              0                    8 COMPLETE
+      5  1.098                      1                    0            0.75              0.2                         5                          1                       4                          250                              0                   22 COMPLETE
+      6  0.090                      0                    1            0.25              0.6                        14                          8                       5                          200                              1                   15 COMPLETE
+      7  1.208                      0                    1            0.75              0.2                         9                          9                       6                          100                              0                   25 COMPLETE
+      8  0.240                      1                    1            0.50              0.1                        17                          2                       4                          225                              0                   25 COMPLETE
+      9  0.035                      1                    0            0.00              0.6                        20                          8                       8                          325                              1                   12 COMPLETE
+     10  0.420                      0                    1            0.75              0.5                         8                         10                       6                          400                              0                   26 COMPLETE
+     11  0.420                      1                    0            0.75              0.2                         5                          5                       6                          300                              0                   21 COMPLETE
+     12  0.410                      1                    0            0.75              0.2                         8                          5                       7                          375                              0                   21 COMPLETE
+     13  0.425                      0                    0            0.75              0.2                         5                          7                       5                          100                              0                   23 COMPLETE
+     14  1.288                      1                    1            1.00              0.2                         7                         10                       5                          175                              0                   18 COMPLETE
+     15  0.360                      0                    1            1.00              0.1                        10                         10                       5                          150                              0                   18 COMPLETE
+     16  0.445                      0                    1            1.00              0.3                         8                         10                       7                          175                              0                   18 COMPLETE
+     17  0.405                      1                    1            1.00              0.2                        13                          9                       6                          100                              0                   18 COMPLETE
+     18  1.328                      1                    1            1.00              0.2                         7                          8                       5                          125                              0                   24 COMPLETE
+     19  0.470                      1                    1            1.00              0.5                         6                          7                       5                          175                              0                   16 COMPLETE
+     20  1.363                      1                    1            1.00              0.1                         7                          8                       5                          125                              0                   24 COMPLETE
+     21  0.365                      1                    1            1.00              0.1                         7                          8                       5                          125                              0                   26 COMPLETE
+     22  1.383                      1                    1            1.00              0.1                         7                          7                       5                          125                              0                   24 COMPLETE
+     23  0.490                      1                    1            1.00              0.1                        10                          6                       5                          125                              0                   24 COMPLETE
+     24  0.470                      1                    1            1.00              0.1                         6                          7                       5                          150                              0                   24 COMPLETE
+     25  0.380                      1                    1            1.00              0.1                        10                          7                       6                          125                              0                   20 COMPLETE
+     26  0.395                      1                    1            1.00              0.1                         7                          8                       5                          200                              0                   23 COMPLETE
+     27  0.325                      1                    1            1.00              0.1                        12                          6                       5                          125                              0                   26 COMPLETE
+     28  0.110                      1                    1            0.25              0.1                         9                          4                       6                          200                              0                   20 COMPLETE
+     29  0.165                      1                    1            0.50              0.3                         6                          6                       4                          100                              1                   24 COMPLETE
+     30  0.035                      1                    1            0.00              0.1                         5                          9                       4                          150                              0                   23 COMPLETE
+     31  0.475                      1                    1            1.00              0.2                         7                          8                       5                          175                              0                   19 COMPLETE
+     32  1.433                      1                    1            1.00              0.2                         7                          9                       5                          150                              0                   15 COMPLETE
+     33  0.465                      1                    1            1.00              0.2                         9                          9                       5                          125                              0                   13 COMPLETE
+     34  1.523                      1                    1            1.00              0.5                         6                          7                       4                          150                              1                   16 COMPLETE
+     35  0.150                      1                    1            0.50              0.5                         6                          7                       4                          150                              1                   11 COMPLETE
+     36  1.578                      1                    1            1.00              0.5                        11                          5                       4                          175                              1                   15 COMPLETE
+
+```
+
+##### Plots
+Trials in x-axis and value in the y-axis. Value is from the result of engine vs engine match adjusted and sent to optimizer.
+```
+initial_best_value = 0.5
+current_best_value = initial_best_value
+trial 1 defeats trial 0 at 69% in a 100-game match.
+current_best_value = current_best_value + (0.69 - initial_best_value) = 0.5 + (0.69-0.5) = 0.69
+value of trial 1 = 0.69
+
+trial 2 defeats trial 1 at 83.3%
+current_best_value = current_best_value + (0.833 - initial_best_value) = 0.69 + (0.833-0.5) = 1.023
+value of trial 2 is 1.023
+```
+
+We do this calculation everytime the new net defeats the current best at more than 50%. These are the values reported to the optimizer because the optimizer keeps track of the best value and other results.
+
+
+![value](https://i.imgur.com/YQe8sTg.png)
+
+***
+
+max_grad is good at 0.5 at this point, high objective value is better, this is the result of engine vs engine match
+
+![](https://i.imgur.com/XmiwSWY.png)
+
+***
+
+lambda at 1 is good
+
+![](https://i.imgur.com/ufOyYCG.png)
+
+***
+
+random_multi_pv_diff is showing some promise in the range 100 to 200
+
+![](https://i.imgur.com/7YLY8nP.png)
+
+*** 
+
+favored random_multi_pv values
+
+![](https://i.imgur.com/mhaWDXJ.png)
+
+***
+
+smart_fen_skipping has to be enabled, a parameter during learning
+
+```
+smart_fen_skipping - this is a flag option. 
+  When specified some position that are not good candidates for teaching are skipped.
+  This includes positions where the best move is a capture or promotion, and position
+  where a king is in check. Default: 0.
+```
+
+![](https://i.imgur.com/etiyCy7.png)
 
 
 ## Credits
