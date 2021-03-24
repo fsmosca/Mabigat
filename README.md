@@ -196,7 +196,7 @@ Two solutions, first use a good pre-trained nn as fix opponent of optimizer para
 Whenever a new net defeats the old best net, this new net will become the best net and be the opponent of new net from the parameters suggested by the optimizer.
 
 ##### Parameters to be optimized
-This the same parameters used in section A above.
+This is the same parameters used in section A above.
 
 ```python
 random_move_count = trial.suggest_int('random_move_count', 5, 20, 1)
@@ -220,7 +220,7 @@ threads  : 6
 hash     : 1024
 
 study name: nnue_study_4
-number of trials: 20
+number of trials: 50
 optimizer: Optuna with TPE sampler
 
 number of training positions: 2000000
@@ -258,7 +258,7 @@ use_best_param: True, adjusted result: 1.023
 
 ```
 
-After 3 trials net 1 defeats net 0 and net 3 defeates net 2.
+After 3 trials net 1 defeats net 0 and net 2 defeates net 1.
 
 Result after trial 36.
 
