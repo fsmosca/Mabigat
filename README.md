@@ -2,11 +2,13 @@
 Parameter optimizer in the generation of NNUE net using Optuna framework.
 
 ## Setup
-* Install python version 3.8 or more
+* Install python version 3.8 or current
 * Install optuna
   * pip install optuna
 * Intall pandas  
   * pip install pandas
+* Install optuna dashboard to see the optimization in the browser live.
+  * pip install optuna-dashboard
 * Download this repo (will upload the whole pack this weekend)
 
 This is tested to work in windows 10.
