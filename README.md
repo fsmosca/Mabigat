@@ -2,13 +2,17 @@
 Parameter optimizer in the generation of NNUE net using Optuna framework.
 
 ## Setup
-* Install python version 3.8 or current
-* Install optuna
+* Install python version 3.8 or current.  
+* Install optuna.  
   * pip install optuna
-* Intall pandas  
+* Intall pandas.   
   * pip install pandas
-* Install optuna dashboard to see the optimization in the browser live.
-  * pip install optuna-dashboard
+* Install optuna dashboard to see the optimization in the browser live.  
+  * pip install optuna-dashboard  
+* Install the following for other visualization.  
+  * pip install plotly
+  * pip install sklearn
+  * pip install kaleido
 * Download this repo (will upload the whole pack this weekend)
 
 This is tested to work in windows 10.
