@@ -3,19 +3,44 @@ Parameter optimizer in the generation of NNUE net using Optuna framework.
 
 ## Setup
 * Install python version 3.8 or current.  
-* Install optuna.  
-  * pip install optuna
-* Intall pandas.   
-  * pip install pandas
-* Install optuna dashboard to see the optimization in the browser live.  
-  * pip install optuna-dashboard  
-* Install the following for other visualization.  
-  * pip install plotly
-  * pip install sklearn
-  * pip install kaleido
-* Download this repo (will upload the whole pack this weekend)
+* Create virtual environment and install dependencies.  
+  You can use powershell on windows 10 or cmd shell on windows 7.  
+  * Create sf_nnue_trainer folder or any folder name on your drive c or any drive, we will put mabigat in this folder.
+    * mkdir sf_nnue_trainer
+    * Create venv virtual environment folder under sf_nnue_trainer
+      * cd sf_nnue_trainer 
+      * python -m venv venv
+      * activate this environment
+        * ./venv/scripts/activate
+      * Install optuna.  
+        * pip install optuna
+      * Intall pandas.   
+        * pip install pandas
+      * Install optuna dashboard to see the optimization in the browser live.  
+        * pip install optuna-dashboard  
+      * Install the following for other visualization like val and train loss, contour plot and others.
+        * pip install plotly
+        * pip install sklearn
+        * pip install kaleido
+      * Download this repo (will upload the whole pack this weekend)
+        * windows 10
+          * git clone https://github.com/fsmosca/Mabigat.git
+          * Once done we can cd to Mabigat folder
+            * cd Mabigat
+          * You can now use mabigat.py  
+            * python mabigat.py --help or  
+            * python mabigat.py --ini-file ./ini/example.ini
+          
+        * windows 7  
+          Download `https://github.com/fsmosca/Mabigat/archive/refs/heads/main.zip` and unzip  
+          * cd Mabigat-main
+          * You can now use mabigat.py  
+            * python mabigat.py --help or  
+            * python mabigat.py --ini-file ./ini/example.ini
 
-This is tested to work in windows 10.
+
+## Command line
+`python mabigat.py --ini-file ./ini/nnue_study_1.ini`
 
 ## Optimization Process
 
