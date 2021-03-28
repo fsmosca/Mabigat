@@ -44,6 +44,21 @@ Parameter optimizer in the generation of NNUE net using Optuna framework.
 ## The ini file
 You can open and edit it, be sure to specify the study_name under OPTUNA section. You can interrupt the optimization and resume. All generated files will be under study/study_name folder. If your study_name is study1, a folder under study would be created i.e d:/mabigat/study/study1. Log files, plots, binpacks, bins and others will be under study1 folder. An example ini file can be found under ini folder.
 
+## Optuna-dashboard
+During optimization a file study_name.db will be saved. You can use optuna-dashboard to view it.
+#### command line
+```
+optuna-dashboard sqlite:///F:\Mabigat\study\example_study\example_study.db
+```
+Log:
+```
+Bottle v0.12.19 server starting up (using WSGIRefServer())...
+Listening on http://127.0.0.1:8080/
+Hit Ctrl-C to quit.
+```
+Open your browser and paste `http://127.0.0.1:8080/`
+
+
 ## Optimization Process
 
 ### A. Generate training positions
