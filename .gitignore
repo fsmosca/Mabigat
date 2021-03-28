@@ -14,7 +14,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# lib/
 lib64/
 parts/
 sdist/
@@ -127,3 +127,20 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Mabigat
+*.txt
+*.bin
+*.binpack
+*.epd
+*.pgn
+*.db
+*.csv
+*.exe
+*.nnue
+*.html
+
+Pycharm
+.idea
+
+
