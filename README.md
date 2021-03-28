@@ -42,7 +42,7 @@ Parameter optimizer in the generation of NNUE net using Optuna framework.
 `python mabigat.py --ini-file ./ini/example.ini`
 
 ## The ini file
-You can open and edit it, be sure to specify the study_name under OPTUNA section. You can interrupt the optimization and resume. All generated files will be under study/study_name folder. If your study_name is study1, a folder under study would be created i.e d:/mabigat/study/study1. Log files, plots, binpacks, bins and others will be under study1 folder. An example ini file can be found under ini folder.
+You can open and edit it, be sure to specify the study_name under OPTUNA section. You can interrupt the optimization and resume. All generated files will be under study/study_name folder. If your study_name is study1, a folder under study would be created i.e d:/mabigat/study/study1. Log files, [plots](https://fsmosca.github.io/Mabigat/), binpacks, bins and others will be under study1 folder. An example ini file can be found under ini folder.
 
 ## Optuna-dashboard
 During optimization a file study_name.db will be saved. You can use optuna-dashboard to view it.
