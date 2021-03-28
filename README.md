@@ -21,7 +21,6 @@ Parameter optimizer in the generation of NNUE net using Optuna framework.
       * Install the following for other visualization like val and train loss, contour plot and others.
         * pip install plotly
         * pip install sklearn
-        * pip install kaleido
       * Download this repo (will upload the whole pack this weekend)
         * windows 10
           * git clone https://github.com/fsmosca/Mabigat.git
