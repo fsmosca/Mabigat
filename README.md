@@ -39,7 +39,7 @@ Parameter optimizer in the generation of NNUE net using Optuna framework.
 
 
 ## Command line
-`python mabigat.py --ini-file ./ini/nnue_study_1.ini`
+`python mabigat.py --ini-file ./ini/example.ini`
 
 ## Optimization Process
 
