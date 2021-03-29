@@ -391,3 +391,4 @@ smart_fen_skipping - this is a flag option.
 * [Stockfish](https://github.com/official-stockfish/Stockfish)
 * [Optuna](https://github.com/optuna/optuna)
 * [Cutechess](https://github.com/cutechess/cutechess)
+* [The Week In Chess](https://theweekinchess.com/)
