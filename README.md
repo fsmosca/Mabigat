@@ -2,41 +2,7 @@
 Parameter optimizer in the generation of NNUE net using Optuna framework.
 
 ## Setup
-* Install python version 3.8 or current.  
-* Create virtual environment and install dependencies.  
-  You can use powershell on windows 10 or cmd shell on windows 7.  
-  * Create sf_nnue_trainer folder or any folder name on your drive c or any drive, we will put mabigat in this folder.
-    * mkdir sf_nnue_trainer
-    * Create venv virtual environment folder under sf_nnue_trainer
-      * cd sf_nnue_trainer 
-      * python -m venv venv
-      * activate this environment
-        * ./venv/scripts/activate
-      * Install optuna.  
-        * pip install optuna
-      * Intall pandas.   
-        * pip install pandas
-      * Install optuna dashboard to see the optimization in the browser live.  
-        * pip install optuna-dashboard  
-      * Install the following for other visualization like val and train loss, contour plot and others.
-        * pip install plotly
-        * pip install sklearn
-      * Download this repository
-        * windows 10
-          * git clone https://github.com/fsmosca/Mabigat.git
-          * Once done we can cd to Mabigat folder
-            * cd Mabigat
-          * You can now use mabigat.py  
-            * python mabigat.py --help or  
-            * python mabigat.py --ini-file ./ini/example.ini
-          
-        * windows 7  
-          Download `https://github.com/fsmosca/Mabigat/archive/refs/heads/main.zip` and unzip  
-          * cd Mabigat-main
-          * You can now use mabigat.py  
-            * python mabigat.py --help or  
-            * python mabigat.py --ini-file ./ini/example.ini
-
+Windows 10 [setup guide](https://github.com/fsmosca/Mabigat/wiki/Windows-10-Setup-Guide)
 
 ## Command line
 `python mabigat.py --ini-file ./ini/example.ini`
