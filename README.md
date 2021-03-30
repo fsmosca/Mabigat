@@ -10,6 +10,210 @@ Windows 10 [setup guide](https://github.com/fsmosca/Mabigat/wiki/Windows-10-Setu
 ## The ini file
 You can open and edit it, be sure to specify the study_name under OPTUNA section. You can interrupt the optimization and resume. All generated files will be under study/study_name folder. If your study_name is study1, a folder under study would be created i.e d:/mabigat/study/study1. Log files, [plots](https://fsmosca.github.io/Mabigat/), binpacks, bins and others will be under study1 folder. An example ini file can be found under ini folder.
 
+#### example.ini
+```python
+[MABIGAT]
+# Line that starts with # is just a comment.
+
+# The best param found so far will be the opponent of optimizer suggested param.
+use_best_param = 1
+
+# Increase this value like 0.55 to absorb the noise in engine vs engine match.
+init_best_match_result = 0.52
+
+# ==============================================================================
+
+
+
+# ==============================================================================
+[OPTUNA]
+# Line that starts with # is just a comment.
+# study_name is mandatory, don't use a name with space.
+# study_name = my study name, bad
+# study_name = my_study_name, good
+
+study_name = example_study
+num_trials = 100
+
+# ==============================================================================
+
+
+
+# ==============================================================================
+[ENGINE]
+# Line that starts with # is just a comment.
+
+# Some options here can be overridden by engine options defined in TRAINING_POS_GENERATION,
+# VALIDATION_POS_GENERATION and LEARNING.
+
+# engine_file is mandatory
+engine_file = ./engine/nodchip_stockfish_2021-03-23.exe
+
+# define your uci engine options
+
+# Learning from scratch does not need an evalfile.
+# For reinforcement or asking the help of a good net
+# during learning, define your base nnue net below.
+# evalfile = ./engine/my_good_net.nnue
+
+threads = 6
+hash = 1024
+
+use nnue = false
+
+# Set skiploadingeval to true for learning from scratch.
+skiploadingeval = true
+
+pruneatshallowdepth = false
+
+# ==============================================================================
+
+
+
+# ==============================================================================
+[CUTECHESS]
+# Line that starts with # is just a comment.
+
+# The path/file or file of your python interpreter. Use python 3 only.
+# Example:
+# c:/python38/python.exe
+# Or if it is already in the path, use python.exe or python3.exe
+python_file = python.exe
+
+# cutechess-cli will be used to create a match between nets
+cutechess_cli_path = ./cutechess/cutechess-cli.exe
+
+# By default games=2 and repeat=2, so total_games = rounds x 2
+rounds = 500
+
+# To use blitz 2s+50ms, use the following.
+# If there is = in the value, enclose the value in double quotes.
+# time_control = "tc=0/2+0.05 option.Hash=64 \"option.Use NNUE=pure\""
+
+# To use fix depth match use the following.
+# If there is = in the value, enclose the value in double quotes.
+time_control = "tc=inf depth=4 option.Hash=64 \"option.Use NNUE=pure\""
+
+# If there is = in the value, enclose the value in double quotes.
+book = "./book/mabigat.pgn format=pgn order=random"
+
+# concurrency default is 1
+concurrency = 6
+
+# If there is = in the value, enclose the value in double quotes.
+draw = "-draw movenumber=80 movecount=5 score=0"
+
+# If there is = in the value, enclose the value in double quotes.
+resign = "-resign movecount=4 score=1000 twosided=true"
+
+# ==============================================================================
+
+
+
+# ==============================================================================
+[TRAINING_POS_GENERATION]
+# Line that starts with # is just a comment.
+# The params here will not be included in the optimization.
+
+num_pos = 1000000
+depth = 1
+write_out_draw_game_in_training_data_generation = 1
+set_recommended_uci_options = 1
+book = ./book/noob_3moves.epd
+
+# ==============================================================================
+
+
+
+# ==============================================================================
+[TRAINING_POS_GENERATION_PARAM_TO_OPTIMIZE]
+# Line that starts with # is just a comment.
+# The params here will be optimized.
+
+# (min, high, step)
+# random_move_count = (5, 20, 1)
+
+random_multi_pv = (0, 12, 1)
+
+# random_move_minply = (1, 12, 1)
+
+# categorical
+# random_move_like_apery = [0, 1]
+
+write_minply = (4, 20, 1)
+
+# ==============================================================================
+
+
+
+# ==============================================================================
+[VALIDATION_POS_GENERATION]
+# Line that starts with # is just a comment.
+# The params here will not be included in the optimization.
+
+# The book specified in TRAINING_POS_GENERATION section will be used here as well.
+
+num_pos = 100000
+depth = 3
+
+# ==============================================================================
+
+
+
+# ==============================================================================
+[VALIDATION_POS_GENERATION_PARAM_TO_OPTIMIZE]
+# Line that starts with # is just a comment.
+
+# ==============================================================================
+
+
+
+# ==============================================================================
+[LEARNING]
+# Line that starts with # is just a comment.
+# The params here will not be included in the optimization.
+
+skip_duplicated_positions_in_training = 1
+smart_fen_skipping = 1
+smart_fen_skipping_for_validation = 1
+eval_save_interval = 500000
+loss_output_interval = 50000
+validation_count = 100000
+
+# uci engine options
+enabletranspositiontable = false
+
+# ==============================================================================
+
+
+
+# ==============================================================================
+[LEARNING_PARAM_TO_OPTIMIZE]
+# Line that starts with # is just a comment.
+# The params here will be optimized.
+
+# continuous, pname = (min high step)
+max_grad = (0.1, 0.8, 0.1)
+
+# categorical
+# validation_count = [100000, 200000]
+
+# categorical
+# lambda = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+# ==============================================================================
+
+
+
+# =============================================================================
+[PLOT]
+# Line that starts with # is just a comment.
+
+# Select the params being optimized that will be plotted. Number of param is 2 to 4.
+plot_params = ["max_grad", "random_multi_pv", "write_minply"]
+
+# =============================================================================
+```
+
 ## File storage warning
 This optimization takes a lot from your available disk space. Be sure to place your optimization on a drive with an available size of around 500 GB or more.
 
