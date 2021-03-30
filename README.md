@@ -56,7 +56,10 @@ engine_file = ./engine/nodchip_stockfish_2021-03-23.exe
 # during learning, define your base nnue net below.
 # evalfile = ./engine/my_good_net.nnue
 
+# Be sure to reduce this if your processor only support 4 threads or less.
 threads = 6
+
+# The memory in mb - megabytes used by the engine, reduce this if you available RAM is smaller.
 hash = 1024
 
 use nnue = false
