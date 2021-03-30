@@ -1,5 +1,5 @@
 # Mabigat
-Parameter optimizer in the generation of NNUE net using Optuna framework.
+A hyperparameter optimizer for the generation of NNUE net using [Optuna](https://github.com/optuna/optuna) framework.
 
 ## Setup
 Windows 10 [setup guide](https://github.com/fsmosca/Mabigat/wiki/Windows-10-Setup-Guide)
