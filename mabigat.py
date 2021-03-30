@@ -11,7 +11,7 @@ optimize those parameters."""
 __author__ = 'fsmosca'
 __script_name__ = 'mabigat'
 __description__ = 'Mabigat NNUE net hyperparameter optimizer'
-__version__ = 'v0.1.0'
+__version__ = 'v0.2.0'
 __credits__ = ['musketeerchess']
 
 
@@ -581,7 +581,7 @@ def get_training_gen_param_to_optimize(ini_file, trial):
                     if isinstance(n_value[0], float):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
-                            var = trial.suggest_float(opt_name, min, high, step)
+                            var = trial.suggest_float(opt_name, min, high, step=step)
                             training_gen_param_to_optimize.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
@@ -626,7 +626,7 @@ def get_validation_gen_param_to_optimize(ini_file, trial):
                     if isinstance(n_value[0], float):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
-                            var = trial.suggest_float(opt_name, min, high, step)
+                            var = trial.suggest_float(opt_name, min, high, step=step)
                             validation_gen_param_to_optimize.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
