@@ -11,7 +11,7 @@ optimize those parameters."""
 __author__ = 'fsmosca'
 __script_name__ = 'mabigat'
 __description__ = 'Mabigat NNUE net hyperparameter optimizer'
-__version__ = 'v0.2.0'
+__version__ = 'v0.3.0'
 __credits__ = ['musketeerchess']
 
 
@@ -384,6 +384,13 @@ def create_folder(folder):
 
 def move_data(src, dst):
     shutil.move(src, dst)
+
+
+def get_sampler(ini_file):
+    parser = configparser.ConfigParser()
+    parser.read(ini_file)
+    data = dict(parser.items('OPTUNA'))
+    return data.get('sampler', 'tpe')
 
 
 def get_study_name(ini_file):
@@ -883,13 +890,19 @@ def main():
                           sub_study_folder=sub_study_folder,
                           eval_save_dir=eval_save_folder)
 
-    # Define study.
+    # Define storage, sampler and study.
     storage_name = f'sqlite:///{sub_study_folder}/{study_name}.db'
-    sampler = optuna.samplers.TPESampler(
-            n_startup_trials=10,  # default
-            multivariate=False,  # default, for experimemt later
-            warn_independent_sampling=True  # default, for experimemt later
-    )
+
+    sampler_name = get_sampler(ini_file)
+    if sampler_name.lower() == 'cmaes':
+        # Avoid using categorical pram type.
+        # https://optuna.readthedocs.io/en/stable/reference/generated/optuna.samplers.CmaEsSampler.html
+        sampler = optuna.samplers.CmaEsSampler(seed=100)
+    else:
+        # tpe
+        # https://optuna.readthedocs.io/en/stable/reference/generated/optuna.samplers.TPESampler.html
+        sampler = optuna.samplers.TPESampler(seed=100, multivariate=False)
+
     study = optuna.create_study(
         study_name=study_name,
         storage=storage_name,
@@ -899,15 +912,16 @@ def main():
     )
 
     # Logging to file and console.
-    logger.info(f'Mabigat {__version__}\n')
+    logger.info(f'Mabigat {__version__}')
+    logger.info(f'optuna {optuna.__version__}\n')
 
     logger.info(f'engine   : {engine_file}')
     logger.info(f'threads  : {threads}')
     logger.info(f'hash     : {hash_mb}\n')
 
-    logger.info(f'study name      : {study_name}')
-    logger.info(f'number of trials: {n_trials}')
-    logger.info(f'optimizer       : Optuna with TPE sampler\n')
+    logger.info(f'study name        : {study_name}')
+    logger.info(f'sampler/optimizer : {sampler_name}')
+    logger.info(f'number of trials  : {n_trials}\n')
 
     logger.info(f'number of training positions  : {numpos_train}')
 
