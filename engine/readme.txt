@@ -4,6 +4,13 @@ Nodchip Stockfish
 Link: https://github.com/nodchip/Stockfish
 
 
-The file nodchip_stockfish_2021-03-23.exe is compiled for modern processor
-using the source in the link above. You can check on the source on that site
-and make a compile optimized for your system.
+nodchip_stockfish_2021-03-23.exe
+Compiled with x86-64-modern
+
+
+nodchip_stockfish_2021-04-04.exe
+Compiled with x86-64-modern
+
+* 2-fold repetitions is not adjudicated as draw in gensfen.
+* Check invalid ep square in FEN.
+* Add options for warmup steps in training
