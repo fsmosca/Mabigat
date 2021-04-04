@@ -11,7 +11,7 @@ optimize those parameters."""
 __author__ = 'fsmosca'
 __script_name__ = 'mabigat'
 __description__ = 'Mabigat NNUE net hyperparameter optimizer'
-__version__ = 'v0.3.0'
+__version__ = 'v0.4.0'
 __credits__ = ['musketeerchess']
 
 
@@ -179,6 +179,8 @@ class TrainingSFNNUE:
                 break
 
         logger.info(f'done {mode} data generation')
+
+        self.send(eng, 'quit')
 
     def learn(
             self,
