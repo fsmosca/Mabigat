@@ -11,7 +11,7 @@ optimize those parameters."""
 __author__ = 'fsmosca'
 __script_name__ = 'mabigat'
 __description__ = 'Mabigat NNUE net hyperparameter optimizer'
-__version__ = 'v0.6.0'
+__version__ = 'v0.7.0'
 __credits__ = ['musketeerchess']
 
 
@@ -141,19 +141,14 @@ class TrainingSFNNUE:
                 kval = k.lower()
                 if kval == 'set_recommended_uci_options':
                     cmd += f' {k}'
-                # Filter out buggy flag at this moment (2021-03-24)
                 elif kval == 'ensure_quiet':
-                    continue
+                    cmd += f' {k}'
                 elif kval == 'num_pos':
                     cmd += f' loop {v}'
                 elif kval in excluded:
                     continue
                 else:
-                    if kval == 'random_multi_pv':
-                        if v >= 2:
-                            cmd += f' {k} {v}'
-                    else:
-                        cmd += f' {k} {v}'
+                    cmd += f' {k} {v}'
 
         # Add the param that is not to be optimized.
         for par in generation_param:
@@ -161,9 +156,8 @@ class TrainingSFNNUE:
                 kval = k.lower()
                 if kval == 'set_recommended_uci_options':
                     cmd += f' {k}'
-                # Filter out buggy flag at this moment (2021-03-24)
                 elif kval == 'ensure_quiet':
-                    continue
+                    cmd += f' {k}'
                 elif kval == 'num_pos':
                     cmd += f' loop {v}'
                 elif kval in excluded:
@@ -253,7 +247,7 @@ class TrainingSFNNUE:
         for par in learning_param_to_optimize:
             for k, v in par.items():
                 if k in LEARNING_FLAG_PARAMS:
-                    if v == 1:
+                    if v == '1':
                         cmd += f' {k}'
                 elif k in excluded:
                     continue
@@ -264,7 +258,7 @@ class TrainingSFNNUE:
         for par in learning_param:
             for k, v in par.items():
                 if k in LEARNING_FLAG_PARAMS:
-                    if v == 1:
+                    if v == '1':
                         cmd += f' {k}'
                 elif k in excluded:
                     continue
@@ -1053,8 +1047,6 @@ def main():
             logger.debug(f'Learning param to optimize:')
             for n in learning_param_to_optimize:
                 logger.debug(n)
-
-        mode = 'learn'
 
         logger.info('run learning ...')
 
