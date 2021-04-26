@@ -11,7 +11,7 @@ optimize those parameters."""
 __author__ = 'fsmosca'
 __script_name__ = 'mabigat'
 __description__ = 'Mabigat NNUE net hyperparameter optimizer'
-__version__ = 'v0.5.0'
+__version__ = 'v0.6.0'
 __credits__ = ['musketeerchess']
 
 
@@ -788,7 +788,7 @@ def plot_val_train_loss(sflog):
                 train_loss.append(value)
 
             # - move accuracy = 0.4875%
-            elif 'move accuracy = ' in line:
+            elif 'move accuracy = ' in line and not 'random move accuracy = ' in line:
                 value = float(line.split('move accuracy = ')[1].split('%')[0])
                 move_acc.append(value)
 
