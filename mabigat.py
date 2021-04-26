@@ -11,7 +11,7 @@ optimize those parameters."""
 __author__ = 'fsmosca'
 __script_name__ = 'mabigat'
 __description__ = 'Mabigat NNUE net hyperparameter optimizer'
-__version__ = 'v0.4.0'
+__version__ = 'v0.5.0'
 __credits__ = ['musketeerchess']
 
 
@@ -57,13 +57,16 @@ LEARNING_FLAG_PARAMS = [
 
 
 class TrainingSFNNUE:
-    def __init__(self, enginefn, engine_options,
+    def __init__(self, enginefn, engine_options, ini_file,
                  sub_study_folder='log', eval_save_dir='evalsave'):
         self.enginefn = enginefn
         self.engine_options = engine_options
+        self.ini_file = ini_file
         self.sub_study_folder = sub_study_folder
         self.eval_save_dir = eval_save_dir
         self.engine_option_names = self.get_engine_option_names()
+        self.training_pos = get_num_positions(ini_file, mode='train')
+        self.validation_pos = get_validation_count(ini_file)
 
     def send(self, proc, command):
         proc.stdin.write(f'{command}\n')
@@ -295,7 +298,7 @@ class TrainingSFNNUE:
             # Attempt to plot if there values in val and train losses.
             if len(val_loss) and len(train_loss):
                 fig = make_subplots(rows=2, cols=2, vertical_spacing=0.18,
-                                    subplot_titles=("val/train loss", "move accuracy", "learning rate", "val/train loss by positions"))
+                                    subplot_titles=('val loss', 'train loss', 'move accuracy', 'learning rate'))
 
                 fig.add_trace(
                     go.Scatter(x=epochs, y=val_loss, name='val loss'),
@@ -304,44 +307,32 @@ class TrainingSFNNUE:
 
                 fig.add_trace(
                     go.Scatter(x=epochs, y=train_loss, name='train loss'),
-                    row=1, col=1
-                )
-
-                fig.add_trace(
-                    go.Scatter(x=epochs, y=move_acc, name='move accuracy'),
                     row=1, col=2
                 )
 
                 fig.add_trace(
-                    go.Scatter(x=epochs, y=lr, name='learning rate'),
+                    go.Scatter(x=epochs, y=move_acc, name='move accuracy'),
                     row=2, col=1
                 )
 
                 fig.add_trace(
-                    go.Scatter(x=sfens, y=val_loss, name='val loss by positions'),
-                    row=2, col=2
-                )
-
-                fig.add_trace(
-                    go.Scatter(x=sfens, y=train_loss, name='train loss by positions'),
+                    go.Scatter(x=epochs, y=lr, name='learning rate'),
                     row=2, col=2
                 )
 
                 fig['layout']['xaxis1']['title'] = 'epoch'
                 fig['layout']['xaxis2']['title'] = 'epoch'
                 fig['layout']['xaxis3']['title'] = 'epoch'
-                fig['layout']['xaxis4']['title'] = 'positions'
+                fig['layout']['xaxis4']['title'] = 'epoch'
 
                 fig['layout']['yaxis1']['title'] = 'loss'
-                fig['layout']['yaxis2']['title'] = 'move accuracy %'
-                fig['layout']['yaxis3']['title'] = 'learning rate'
-                fig['layout']['yaxis4']['title'] = 'loss'
+                fig['layout']['yaxis2']['title'] = 'loss'
+                fig['layout']['yaxis3']['title'] = 'move accuracy %'
+                fig['layout']['yaxis4']['title'] = 'learning rate'
 
                 fig.update_layout(height=800, width=1500,
-                                  title_text="Learning",
+                                  title_text=f"Learning, trainpos: {self.training_pos}, valpos: {self.validation_pos}",
                                   legend_title="Legend")
-
-                # fig['layout']['yaxis1'].update(title='loss', range=[min(tmp), max(tmp)], autorange=False)
 
                 include_plotlyjs = True
                 full_html, auto_play = False, False
@@ -472,6 +463,13 @@ def get_num_positions(ini_file, mode='train'):
     else:
         data = dict(parser.items('TRAINING_POS_GENERATION'))
         return int(data.get('num_pos', 8000000000))
+
+
+def get_validation_count(ini_file):
+    parser = configparser.ConfigParser()
+    parser.read(ini_file)
+    data = dict(parser.items('LEARNING'))
+    return int(data.get('validation_count', 2000))
 
 
 def get_book(ini_file):
@@ -888,7 +886,7 @@ def main():
 
     # Define class where pos generation and learning methods are called.
     engine_options = get_engine_options(ini_file)
-    nnue = TrainingSFNNUE(engine_file, engine_options,
+    nnue = TrainingSFNNUE(engine_file, engine_options, ini_file,
                           sub_study_folder=sub_study_folder,
                           eval_save_dir=eval_save_folder)
 
