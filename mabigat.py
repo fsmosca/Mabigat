@@ -11,7 +11,7 @@ optimize those parameters."""
 __author__ = 'fsmosca'
 __script_name__ = 'mabigat'
 __description__ = 'Mabigat NNUE net hyperparameter optimizer'
-__version__ = 'v0.7.1'
+__version__ = 'v0.8.0'
 __credits__ = ['musketeerchess']
 
 
@@ -574,7 +574,7 @@ def get_training_gen_param_to_optimize(ini_file, trial):
                 if '[' in opt_value and ']' in opt_value:
                     n_value = ast.literal_eval(opt_value)
                     var = trial.suggest_categorical(opt_name, n_value)
-                    logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                    logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                     training_gen_param_to_optimize.append({opt_name: var})
 
                 # continuous variable
@@ -585,24 +585,24 @@ def get_training_gen_param_to_optimize(ini_file, trial):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_float(opt_name, min, high, step=step)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             training_gen_param_to_optimize.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_float(opt_name, min, high)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             training_gen_param_to_optimize.append({opt_name: var})
 
                     elif isinstance(n_value[0], int):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_int(opt_name, min, high, step)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             training_gen_param_to_optimize.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_int(opt_name, min, high)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             training_gen_param_to_optimize.append({opt_name: var})
 
     return training_gen_param_to_optimize
@@ -625,7 +625,7 @@ def get_validation_gen_param_to_optimize(ini_file, trial):
                 if '[' in opt_value and ']' in opt_value:
                     n_value = ast.literal_eval(opt_value)
                     var = trial.suggest_categorical(opt_name, n_value)
-                    logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                    logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                     validation_gen_param_to_optimize.append({opt_name: var})
 
                 # continuous variable
@@ -636,24 +636,24 @@ def get_validation_gen_param_to_optimize(ini_file, trial):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_float(opt_name, min, high, step=step)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             validation_gen_param_to_optimize.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_float(opt_name, min, high)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             validation_gen_param_to_optimize.append({opt_name: var})
 
                     elif isinstance(n_value[0], int):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_int(opt_name, min, high, step)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             validation_gen_param_to_optimize.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_int(opt_name, min, high)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             validation_gen_param_to_optimize.append({opt_name: var})
 
     return validation_gen_param_to_optimize
@@ -712,7 +712,7 @@ def get_learning_param_to_optimize(ini_file, trial):
                 if '[' in opt_value and ']' in opt_value:
                     n_value = ast.literal_eval(opt_value)
                     var = trial.suggest_categorical(opt_name, n_value)
-                    logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                    logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                     param.append({opt_name: var})
 
                 # continuous variable
@@ -723,24 +723,24 @@ def get_learning_param_to_optimize(ini_file, trial):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_float(opt_name, min, high, step=step)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             param.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_float(opt_name, min, high)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             param.append({opt_name: var})
 
                     elif isinstance(n_value[0], int):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_int(opt_name, min, high, step)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             param.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_int(opt_name, min, high)
-                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
+                            logger.info(f'stage: {stage}, param to optimize: {opt_name}, value: {var}')
                             param.append({opt_name: var})
 
     return param
@@ -1120,7 +1120,10 @@ def main():
             nn_path = Path(cwd, f'{bins_folder}/{num_trials}_nn.bin')
             opt1_2 = f'option.EvalFile={nn_path}'
 
-            best_trial_value = study.best_trial.values  # a list
+            try:
+                best_trial_value = study.best_trial.values  # a list
+            except ValueError:
+                best_trial_value = None
 
             if use_best_param:
                 best_trial_num = study.best_trial.number
@@ -1133,7 +1136,7 @@ def main():
                 nn_path = Path(cwd, f'{bins_folder}/{best_trial_num}_nn.bin')
                 opt2_2 = f'option.EvalFile={nn_path}'
 
-            logger.info(f'Execute engine vs engine match between {num_trials}_nn.bin and {best_trial_num}_nn.bin')
+            logger.info(f'Execute engine vs engine match for {rounds*2} games between {num_trials}_nn.bin and {best_trial_num}_nn.bin ...')
 
             cmd = f'{python_file} match.py {sub_study_folder} {study_name} {cutechess_cli_path} ' \
                   f'{engine_file} {opt1_1} {opt1_2} {opt2_1} {opt2_2} {rounds} {time_control} ' \
@@ -1167,8 +1170,15 @@ def main():
                     # we need to adjust the result value reported to optimizer.
                     if match_result > init_best_match_result:
                         result_diff = match_result - init_best_match_result
-                        current_best_trial_value = float(best_trial_value[0])  # get index 0 for single objective
-                        reported_match_result = current_best_trial_value + result_diff
+
+                        # Get the best value of best trial from trials history.
+                        if best_trial_value is not None:
+                            current_best_trial_value = float(best_trial_value[0])  # get index 0 for single objective
+                            reported_match_result = current_best_trial_value + result_diff
+                        else:
+                            reported_match_result = match_result
+                            logger.info(f'There is no best value yet in the trial history. '
+                                        f'Use the current match result {match_result} as best value.')
 
                         # The adjusted result may exceed 1.0 or 100%. This is ok as we are maximizing the result.
                         logger.info(f'use_best_param: {use_best_param}, adjusted result: {reported_match_result}')
