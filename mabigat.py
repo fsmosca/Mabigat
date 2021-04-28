@@ -11,7 +11,7 @@ optimize those parameters."""
 __author__ = 'fsmosca'
 __script_name__ = 'mabigat'
 __description__ = 'Mabigat NNUE net hyperparameter optimizer'
-__version__ = 'v0.7.0'
+__version__ = 'v0.7.1'
 __credits__ = ['musketeerchess']
 
 
@@ -562,6 +562,7 @@ def get_training_gen_param_to_optimize(ini_file, trial):
     Asks the optimizer the param values to try.
     """
     training_gen_param_to_optimize = []
+    stage = 'pos gen for training'
 
     parser = configparser.ConfigParser()
     parser.read(ini_file)
@@ -573,6 +574,7 @@ def get_training_gen_param_to_optimize(ini_file, trial):
                 if '[' in opt_value and ']' in opt_value:
                     n_value = ast.literal_eval(opt_value)
                     var = trial.suggest_categorical(opt_name, n_value)
+                    logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                     training_gen_param_to_optimize.append({opt_name: var})
 
                 # continuous variable
@@ -583,20 +585,24 @@ def get_training_gen_param_to_optimize(ini_file, trial):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_float(opt_name, min, high, step=step)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             training_gen_param_to_optimize.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_float(opt_name, min, high)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             training_gen_param_to_optimize.append({opt_name: var})
 
                     elif isinstance(n_value[0], int):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_int(opt_name, min, high, step)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             training_gen_param_to_optimize.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_int(opt_name, min, high)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             training_gen_param_to_optimize.append({opt_name: var})
 
     return training_gen_param_to_optimize
@@ -607,6 +613,7 @@ def get_validation_gen_param_to_optimize(ini_file, trial):
     Asks the optimizer the param values to try.
     """
     validation_gen_param_to_optimize = []
+    stage = 'pos gen for validation'
 
     parser = configparser.ConfigParser()
     parser.read(ini_file)
@@ -618,6 +625,7 @@ def get_validation_gen_param_to_optimize(ini_file, trial):
                 if '[' in opt_value and ']' in opt_value:
                     n_value = ast.literal_eval(opt_value)
                     var = trial.suggest_categorical(opt_name, n_value)
+                    logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                     validation_gen_param_to_optimize.append({opt_name: var})
 
                 # continuous variable
@@ -628,20 +636,24 @@ def get_validation_gen_param_to_optimize(ini_file, trial):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_float(opt_name, min, high, step=step)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             validation_gen_param_to_optimize.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_float(opt_name, min, high)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             validation_gen_param_to_optimize.append({opt_name: var})
 
                     elif isinstance(n_value[0], int):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_int(opt_name, min, high, step)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             validation_gen_param_to_optimize.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_int(opt_name, min, high)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             validation_gen_param_to_optimize.append({opt_name: var})
 
     return validation_gen_param_to_optimize
@@ -688,6 +700,7 @@ def get_learning_param_to_optimize(ini_file, trial):
     Asks the optimizer the param values to try.
     """
     param = []
+    stage = 'learning'
 
     parser = configparser.ConfigParser()
     parser.read(ini_file)
@@ -699,6 +712,7 @@ def get_learning_param_to_optimize(ini_file, trial):
                 if '[' in opt_value and ']' in opt_value:
                     n_value = ast.literal_eval(opt_value)
                     var = trial.suggest_categorical(opt_name, n_value)
+                    logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                     param.append({opt_name: var})
 
                 # continuous variable
@@ -709,20 +723,24 @@ def get_learning_param_to_optimize(ini_file, trial):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_float(opt_name, min, high, step=step)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             param.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_float(opt_name, min, high)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             param.append({opt_name: var})
 
                     elif isinstance(n_value[0], int):
                         if len(n_value) == 3:
                             (min, high, step) = n_value
                             var = trial.suggest_int(opt_name, min, high, step)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             param.append({opt_name: var})
                         elif len(n_value) == 2:
                             (min, high) = n_value
                             var = trial.suggest_int(opt_name, min, high)
+                            logger.info(f'stage: {stage}, optimize: True, name: {opt_name}, value: {var}')
                             param.append({opt_name: var})
 
     return param
