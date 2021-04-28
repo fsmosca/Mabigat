@@ -36,6 +36,7 @@ def main(argv=None):
     cutechess_cli_path = Path(cutechess_cli_path).resolve()
 
     options = f'-concurrency {concurrency}'
+    options += ' -recover'
     options += f' -rounds {rounds} -games {games} -repeat'
     options += f' -each {tc} proto=uci'
     options += f' -pgnout {sub_study_folder}/{study_name}.pgn fi'
